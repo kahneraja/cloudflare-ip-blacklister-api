@@ -37,6 +37,13 @@ class CloudflareGateway
     JSON.parse(response.body)
   end
 
+  def self.delete_rule(key, email, zone_id, rule_id)
+    url = "https://api.cloudflare.com/client/v4/zones/#{zone_id}/firewall/access_rules/rules/#{rule_id}"
+    headers = auth_headers(key, email)
+    response = HTTParty.delete(url, headers: headers).response
+    JSON.parse(response.body)
+  end
+
   # private
 
   def self.auth_headers(key, email)
